@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:background="@color/white"
-    tools:context=".activity.SignInActivity">
+    tools:context=".ui.activities.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_marginTop="16dp"
             app:passwordToggleEnabled="true">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/colorAccent"
+            android:background="@color/green"
+            android:textStyle="bold"
             android:text="@string/sign_in"
             android:textColor="@color/white" />
 
@@ -77,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/or"
+            android:textAllCaps="true"
             android:textAlignment="center"
             android:textColor="@color/black" />
 
@@ -85,7 +87,6 @@
             style="@style/FirebaseUI.Button.AccountChooser.PhoneButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="roboto"
             android:text="@string/sign_in_with_phone"
             android:textAlignment="center"
             android:textAllCaps="true"
@@ -109,7 +110,7 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
+        android:layout_gravity="center"
         android:visibility="gone"
         tools:visibility="visible" />
 

@@ -5,7 +5,7 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_in_with_phone_number">Sign in with phone number</string>
     <string name="click_to_sign_up">Click here to sign up for Gifty!</string>
-    <string name="or">OR</string>
+    <string name="or">Or</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="sign_in_with_phone">Sign in with phone</string>
     <string name="error_empty_password">Enter password!</string>
@@ -16,4 +16,27 @@
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="reset_password">Reset password</string>
     <string name="reset_success">A password was successfully reset, please check your email.</string>
+    <string name="enter_your_full_name">Enter your full name</string>
+    <string name="name">Name</string>
+    <string name="error_empty_fullname">Enter your full name!</string>
+    <string name="snackbar_enter_name">You should enter your name!</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="dialog_title_name">Edit name</string>
+    <string name="dialog_title_email">Edit email</string>
+    <string name="error_loading_error">Data loading error</string>
+    <string name="friends">Friends</string>
+    <string name="add_to_friends">Add to friends</string>
+    <string name="no_friends">You don\'t have friends yet. Find some!</string>
+    <string name="no_users">Couldn\'t find any user matching your query.</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_groups">Groups</string>
+    <string name="title_gift_list">Gift List</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
