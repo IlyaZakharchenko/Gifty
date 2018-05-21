@@ -5,15 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 import ru.kpfu.itis.gifty.R;
-import ru.kpfu.itis.gifty.ui.adapters.UserListAdapter.UserListViewHolder;
 import ru.kpfu.itis.gifty.model.entities.Friend;
 import ru.kpfu.itis.gifty.model.entities.User;
 import ru.kpfu.itis.gifty.model.providers.UserProvider;
+import ru.kpfu.itis.gifty.ui.adapters.UserListAdapter.UserListViewHolder;
 
 /**
  * Created by Ilya Zakharchenko on 16.05.2018.
@@ -28,14 +28,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListViewHolder> {
 
     static class UserListViewHolder extends RecyclerView.ViewHolder {
 
-        private Button addToFriendsButton;
+        private ImageButton actionButton;
         private TextView displayNameTextView;
 
         UserListViewHolder(final View itemView) {
             super(itemView);
             displayNameTextView = itemView.findViewById(R.id.tv_name);
-            addToFriendsButton = itemView.findViewById(R.id.btn_add_friend);
-            addToFriendsButton.setVisibility(View.VISIBLE);
+            actionButton = itemView.findViewById(R.id.btn_action);
         }
     }
 
@@ -49,7 +48,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListViewHolder> {
         User user = userList.get(position);
         holder.displayNameTextView.setText(user.getDisplayName());
         User currentUser = UserProvider.getInstance().getUser();
-        holder.addToFriendsButton.setOnClickListener(v -> {
+        holder.actionButton.setImageResource(R.drawable.ic_add);
+        holder.actionButton.setOnClickListener(v -> {
             userList.remove(user);
             notifyDataSetChanged();
             UserProvider.getInstance()

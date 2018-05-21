@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignStart="@+id/btn_action"
-        android:layout_marginTop="12dp"
+        android:layout_margin="12dp"
         android:textSize="20sp"
-        tools:text="Example Exampleson" />
+        tools:text="Group 1" />
 
     <ImageButton
         android:id="@+id/btn_action"
@@ -26,9 +26,35 @@
     <View
         android:id="@+id/divider"
         style="@style/Divider"
-        android:layout_alignBottom="@+id/btn_action"
+        android:layout_below="@+id/tv_name"
         android:background="@color/blackFade">
 
     </View>
+
+    <Button
+        android:id="@+id/btn_add"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/add_friend_to_group"
+        android:textColor="#A2A2A2" />
+
+    <View
+        android:id="@+id/divider_button"
+        style="@style/Divider"
+        android:layout_below="@+id/btn_add"
+        android:background="@color/blackFade" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_add"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

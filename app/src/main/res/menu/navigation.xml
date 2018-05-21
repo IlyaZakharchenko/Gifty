@@ -8,6 +8,11 @@
         android:title="@string/title_profile"/>
 
     <item
+        android:id="@+id/navigation_gift_list"
+        android:icon="@drawable/ic_list"
+        android:title="@string/title_gift_list" />
+
+    <item
         android:id="@+id/navigation_friends"
         android:icon="@drawable/ic_friend"
         android:title="@string/title_friends" />
@@ -16,9 +21,5 @@
         android:id="@+id/navigation_groups"
         android:icon="@drawable/ic_group"
         android:title="@string/title_groups" />
-    <item
-        android:id="@+id/navigation_gift_list"
-        android:icon="@drawable/ic_list"
-        android:title="@string/title_gift_list" />
 
 </menu>

@@ -48,7 +48,7 @@ public class SetNameActivity extends AppCompatActivity {
             }
             progressBar.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
-            provider.provideUser().addOnCompleteListener((user, isSuccessful) -> {
+            provider.provideUser().addOnCompleteListener(user -> {
                 provider.updateName(name);
                 setResult(RESULT_OK);
                 finish();

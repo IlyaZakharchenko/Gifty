@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 import ru.kpfu.itis.gifty.R;
+import ru.kpfu.itis.gifty.model.entities.GiftList;
 import ru.kpfu.itis.gifty.model.entities.User;
 import ru.kpfu.itis.gifty.model.providers.UserProvider;
 
@@ -29,12 +30,12 @@ public class SignUpActivity extends AppCompatActivity {
     private LinearLayout container;
     private TextInputEditText emailEditText;
     private TextInputLayout emailTextInput;
+    private TextInputEditText nameEditText;
+    private TextInputLayout nameTextInput;
     private TextInputEditText passwordEditText;
     private TextInputLayout passwordTextInput;
     private ProgressBar progressBar;
     private Button signUpButton;
-    private TextInputEditText nameEditText;
-    private TextInputLayout nameTextInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String uid = task.getResult().getUser().getUid();
                             UserProvider.getInstance().createUser(new User(uid, name));
-                            Intent intent = new Intent(this, ProfileActivity.class);
+                            Intent intent = new Intent(this, GiftListActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 
@@ -102,12 +103,13 @@ public class SignUpActivity extends AppCompatActivity {
         emailEditText.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void afterTextChanged(final Editable s) {
+            public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
             }
 
             @Override
-            public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
+            public void afterTextChanged(final Editable s) {
             }
+
 
             @Override
             public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {

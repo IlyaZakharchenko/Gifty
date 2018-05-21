@@ -36,7 +36,6 @@
     <string name="title_friends">Friends</string>
     <string name="title_groups">Groups</string>
     <string name="title_gift_list">Gift List</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_content_button_action">ActionButton</string>
+    <string name="add_friend_to_group">Add friend to group</string>
 </resources>

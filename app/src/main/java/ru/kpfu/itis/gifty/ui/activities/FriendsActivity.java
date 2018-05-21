@@ -23,44 +23,43 @@ import ru.kpfu.itis.gifty.ui.adapters.UserListAdapter;
 
 public class FriendsActivity extends BottomNavigationActivity {
 
-    private FriendListAdapter friendListAdapter;
-    private UserListAdapter usersAdapter;
-    private FirebaseFirestore db;
-    private List<Friend> friendList;
-    private List<User> userList;
-    private LayoutManager manager;
     private User currentUser;
-
+    private FirebaseFirestore db;
+    private TextView emptyTextView;
+    private List<Friend> friendList;
+    private FriendListAdapter friendListAdapter;
+    private LayoutManager manager;
+    private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private SearchView searchView;
-    private ProgressBar progressBar;
-    private TextView emptyTextView;
+    private List<User> userList;
+    private UserListAdapter usersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
         db = FirebaseFirestore.getInstance();
-        currentUser =  UserProvider.getInstance().getUser();
-        friendList = currentUser.getFriendList();
+        currentUser = UserProvider.getInstance().getUser();
         initViews();
-        initFields();
-        initListeners();
-        setFriendsView();
-    }
-
-    private void initFields() {
-        manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        userList = new ArrayList<>();
-        friendListAdapter = new FriendListAdapter(friendList);
-        recyclerView.setAdapter(friendListAdapter);
-        usersAdapter = new UserListAdapter(userList);
+        progressBar.setVisibility(View.VISIBLE);
+        UserProvider.getInstance().loadFriends().addOnCompleteListener(user -> {
+            progressBar.setVisibility(View.GONE);
+            friendList = user.getFriendList();
+            initFields();
+            initListeners();
+            setFriendsView();
+        });
     }
 
     protected void initListeners() {
         navigation.setOnNavigationItemSelectedListener(navigationListener);
         searchView.setOnQueryTextListener(new OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                return false;
+            }
+
             @Override
             public boolean onQueryTextChange(final String newText) {
                 if (newText.isEmpty()) {
@@ -101,11 +100,6 @@ public class FriendsActivity extends BottomNavigationActivity {
                 }
                 return true;
             }
-
-            @Override
-            public boolean onQueryTextSubmit(final String query) {
-                return false;
-            }
         });
     }
 
@@ -118,25 +112,32 @@ public class FriendsActivity extends BottomNavigationActivity {
         emptyTextView = findViewById(R.id.tv_empty);
     }
 
+    private void initFields() {
+        manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        userList = new ArrayList<>();
+        friendListAdapter = new FriendListAdapter(friendList);
+        recyclerView.setAdapter(friendListAdapter);
+        usersAdapter = new UserListAdapter(userList);
+    }
+
     private void setFriendsView() {
+        friendListAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(friendListAdapter);
         if (!friendList.isEmpty()) {
-            friendListAdapter.notifyDataSetChanged();
-            recyclerView.setAdapter(friendListAdapter);
             emptyTextView.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             emptyTextView.setVisibility(View.VISIBLE);
             emptyTextView.setText(getString(R.string.no_friends));
         }
     }
 
     private void setUsersView() {
+        usersAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(usersAdapter);
         if (!userList.isEmpty()) {
             emptyTextView.setVisibility(View.GONE);
-            usersAdapter.notifyDataSetChanged();
-            recyclerView.setAdapter(usersAdapter);
-        }
-        else {
+        } else {
             emptyTextView.setVisibility(View.VISIBLE);
             emptyTextView.setText(R.string.no_users);
         }

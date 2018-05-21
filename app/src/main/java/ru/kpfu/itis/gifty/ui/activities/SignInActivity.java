@@ -59,11 +59,10 @@ public class SignInActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = auth.getCurrentUser();
         if (firebaseUser != null) {
-            Log.i(TAG, "Invoking ProfileActivity 1");
             progressBar.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
             UserProvider.getInstance().provideUser().addOnCompleteListener(
-                    (user, isSuccessful) -> startProfileActivity());
+                    user -> startGiftListActivity());
         }
     }
 
@@ -79,10 +78,10 @@ public class SignInActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     container.setVisibility(View.GONE);
                     UserProvider.getInstance().provideUser().addOnCompleteListener(
-                            (user, isSuccessful) -> {
+                            user -> {
                                 progressBar.setVisibility(View.GONE);
                                 container.setVisibility(View.VISIBLE);
-                                startProfileActivity();
+                                startGiftListActivity();
                             });
                     break;
             }
@@ -109,15 +108,12 @@ public class SignInActivity extends AppCompatActivity {
                     RC_PHONE);
         });
 
-        signUpButton.setOnClickListener(v -> {
-            startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
-        });
+        signUpButton.setOnClickListener(v -> startActivity(new Intent(SignInActivity.this, SignUpActivity.class)));
 
         signInButton.setOnClickListener(v -> {
-            Log.i(TAG, "Clicking sign in");
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            hide(container);
+            hide(getCurrentFocus());
 
             if (TextUtils.isEmpty(email)) {
                 emailTextInput.setError(getString(R.string.error_empty_email));
@@ -141,11 +137,8 @@ public class SignInActivity extends AppCompatActivity {
                     task -> {
 
                         if (task.isSuccessful()) {
-                            Log.i(TAG, "Invoking ProfileActivity 2");
                             UserProvider.getInstance().provideUser().addOnCompleteListener(
-                                    (user, isSuccessful) -> {
-                                        startProfileActivity();
-                                    });
+                                    user -> startGiftListActivity());
                         } else {
                             Snackbar.make(
                                     container,
@@ -205,9 +198,8 @@ public class SignInActivity extends AppCompatActivity {
         container = findViewById(R.id.container);
     }
 
-    private void startProfileActivity() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        Log.i(TAG, "Starting ProfileActivity");
+    private void startGiftListActivity() {
+        Intent intent = new Intent(this, GiftListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

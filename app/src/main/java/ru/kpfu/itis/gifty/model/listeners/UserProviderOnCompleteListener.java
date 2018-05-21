@@ -7,5 +7,5 @@ import ru.kpfu.itis.gifty.model.entities.User;
  */
 public interface UserProviderOnCompleteListener {
 
-    void onComplete(User user, boolean isSuccessful);
+    void onComplete(User user);
 }

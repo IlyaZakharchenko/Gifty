@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import java.util.List;
 import ru.kpfu.itis.gifty.R;
 import ru.kpfu.itis.gifty.ui.adapters.FriendListAdapter.FriendsViewHolder;
@@ -21,10 +23,16 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     static class FriendsViewHolder extends RecyclerView.ViewHolder {
 
         private TextView displayName;
+        private ImageButton actionButton;
 
         FriendsViewHolder(final View itemView) {
             super(itemView);
             displayName = itemView.findViewById(R.id.tv_name);
+            actionButton = itemView.findViewById(R.id.btn_action);
+            actionButton.setOnClickListener(v ->
+                    //TODO
+                    Toast.makeText(itemView.getContext(), "Delete", Toast.LENGTH_SHORT).show()
+            );
         }
     }
 
@@ -43,6 +51,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final FriendsViewHolder holder, final int position) {
         holder.displayName.setText(friends.get(position).getDisplayName());
+        holder.actionButton.setImageResource(R.drawable.ic_delete);
     }
 
     @Override

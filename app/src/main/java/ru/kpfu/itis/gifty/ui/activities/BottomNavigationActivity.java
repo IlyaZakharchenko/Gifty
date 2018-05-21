@@ -3,20 +3,30 @@ package ru.kpfu.itis.gifty.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.FrameLayout;
 import ru.kpfu.itis.gifty.R;
 
-public abstract class BottomNavigationActivity extends AppCompatActivity {
+public class BottomNavigationActivity extends AppCompatActivity {
 
-    protected BottomNavigationView navigation;
-
-    protected OnNavigationItemSelectedListener navigationListener;
+    private FrameLayout fragmentContainer;
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        navigationListener = item -> {
+        setContentView(R.layout.activity_bottom_navigation);
+        initViews();
+        initListeners();
+    }
+
+    private void initViews() {
+        navigation = findViewById(R.id.navigation);
+        fragmentContainer = findViewById(R.id.fragment_host);
+    }
+
+    private void initListeners() {
+        navigation.setOnNavigationItemSelectedListener(item -> {
             Intent intent = new Intent()
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -50,6 +60,6 @@ public abstract class BottomNavigationActivity extends AppCompatActivity {
                 default:
                     return true;
             }
-        };
+        });
     }
 }

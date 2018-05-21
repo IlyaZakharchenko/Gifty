@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 public class Keyboard {
     public static void hide(View v) {
         if (v.getContext() != null) {
+            v.clearFocus();
             InputMethodManager manager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (manager != null) {
                 manager.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
