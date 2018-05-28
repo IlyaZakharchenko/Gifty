@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/GiftyTheme.NoActionBar"
-    tools:context=".ui.activities.GroupsActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.AppBarLayout
+        style="@style/GiftyTheme.AppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <Toolbar
+            style="@style/GiftyTheme.PopupOverlay"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:title="@string/title_groups"
+            android:title="@string/add_friends"
             android:titleTextColor="@color/white"
             app:layout_scrollFlags="scroll|snap|enterAlways">
 
@@ -37,14 +38,12 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
-        app:itemIconTint="@color/bottom_navigation_items_color"
-        app:itemTextColor="@color/bottom_navigation_items_color"
-        app:menu="@menu/navigation" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 </android.support.design.widget.CoordinatorLayout>

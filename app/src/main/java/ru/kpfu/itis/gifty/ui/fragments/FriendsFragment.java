@@ -1,13 +1,17 @@
-package ru.kpfu.itis.gifty.ui.activities;
+package ru.kpfu.itis.gifty.ui.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,39 +25,55 @@ import ru.kpfu.itis.gifty.model.providers.UserProvider;
 import ru.kpfu.itis.gifty.ui.adapters.FriendListAdapter;
 import ru.kpfu.itis.gifty.ui.adapters.UserListAdapter;
 
-public class FriendsActivity extends BottomNavigationActivity {
+public class FriendsFragment extends Fragment {
 
     private User currentUser;
     private FirebaseFirestore db;
     private TextView emptyTextView;
     private List<Friend> friendList;
     private FriendListAdapter friendListAdapter;
-    private LayoutManager manager;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private List<User> userList;
     private UserListAdapter usersAdapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
-        db = FirebaseFirestore.getInstance();
-        currentUser = UserProvider.getInstance().getUser();
-        initViews();
-        progressBar.setVisibility(View.VISIBLE);
-        UserProvider.getInstance().loadFriends().addOnCompleteListener(user -> {
-            progressBar.setVisibility(View.GONE);
-            friendList = user.getFriendList();
-            initFields();
-            initListeners();
-            setFriendsView();
-        });
+    public static FriendsFragment newInstance() {
+        Bundle args = new Bundle();
+        FriendsFragment fragment = new FriendsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    protected void initListeners() {
-        navigation.setOnNavigationItemSelectedListener(navigationListener);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
+        currentUser = UserProvider.getInstance().getUser();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_friends, container, false);
+        initViews(v);
+        friendList = UserProvider.getInstance().getUser().getFriendList();
+        initListeners();
+        initFields();
+        setFriendsView();
+        return v;
+    }
+
+    private void initFields() {
+        LayoutManager manager = new LinearLayoutManager(getActivity());
+        userList = new ArrayList<>();
+        friendListAdapter = new FriendListAdapter(friendList, getActivity());
+        usersAdapter = new UserListAdapter(userList);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(friendListAdapter);
+    }
+
+    private void initListeners() {
         searchView.setOnQueryTextListener(new OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
@@ -65,6 +85,7 @@ public class FriendsActivity extends BottomNavigationActivity {
                 if (newText.isEmpty()) {
                     setFriendsView();
                 } else {
+                    setUsersView();
                     progressBar.setVisibility(View.VISIBLE);
                     emptyTextView.setVisibility(View.GONE);
                     String textStart = newText.substring(0, newText.length() - 1);
@@ -95,7 +116,7 @@ public class FriendsActivity extends BottomNavigationActivity {
                                     Snackbar.make(recyclerView, getString(R.string.error_loading_error),
                                             Snackbar.LENGTH_LONG).show();
                                 }
-                                setUsersView();
+                                usersAdapter.notifyDataSetChanged();
                             });
                 }
                 return true;
@@ -103,22 +124,11 @@ public class FriendsActivity extends BottomNavigationActivity {
         });
     }
 
-    protected void initViews() {
-        navigation = findViewById(R.id.navigation);
-        navigation.setSelectedItemId(R.id.navigation_friends);
-        recyclerView = findViewById(R.id.recycler_view);
-        searchView = findViewById(R.id.search_view);
-        progressBar = findViewById(R.id.progress_bar);
-        emptyTextView = findViewById(R.id.tv_empty);
-    }
-
-    private void initFields() {
-        manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        userList = new ArrayList<>();
-        friendListAdapter = new FriendListAdapter(friendList);
-        recyclerView.setAdapter(friendListAdapter);
-        usersAdapter = new UserListAdapter(userList);
+    private void initViews(View v) {
+        recyclerView = v.findViewById(R.id.recycler_view);
+        searchView = v.findViewById(R.id.search_view);
+        progressBar = v.findViewById(R.id.progress_bar);
+        emptyTextView = v.findViewById(R.id.tv_empty);
     }
 
     private void setFriendsView() {

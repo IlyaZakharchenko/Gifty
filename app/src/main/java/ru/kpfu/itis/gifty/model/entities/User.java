@@ -11,10 +11,11 @@ import java.util.List;
 @IgnoreExtraProperties
 public class User {
 
-    private String uid;
     private String displayName;
-    @Exclude
     private List<Friend> friendList;
+    private List<Gift> giftList;
+    private List<Group> groupList;
+    private String uid;
 
     public User(String uid, String name) {
         this.uid = uid;
@@ -22,11 +23,11 @@ public class User {
         friendList = new ArrayList<>();
     }
 
-    public User() {
+    public User(String uid) {
+        this(uid, null);
     }
 
-    public String getUid() {
-        return uid;
+    public User() {
     }
 
     public String getDisplayName() {
@@ -37,11 +38,41 @@ public class User {
         this.displayName = displayName;
     }
 
+    @Exclude
     public List<Friend> getFriendList() {
         return friendList;
     }
 
+    @Exclude
     public void setFriendList(final List<Friend> friendList) {
         this.friendList = friendList;
+    }
+
+    @Exclude
+    public List<Gift> getGiftList() {
+        return giftList;
+    }
+
+    @Exclude
+    public void setGiftList(List<Gift> giftList) {
+        this.giftList = giftList;
+    }
+
+    @Exclude
+    public List<Group> getGroupList() {
+        return groupList;
+    }
+
+    @Exclude
+    public void setGroupList(List<Group> groupList) {
+        this.groupList = groupList;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

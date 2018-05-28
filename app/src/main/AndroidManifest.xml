@@ -7,25 +7,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/GiftyTheme">
+        android:theme="@style/GiftyTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".ui.activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.ProfileActivity" />
         <activity android:name=".ui.activities.SignUpActivity" />
         <activity android:name=".ui.activities.SetNameActivity" />
         <activity android:name=".ui.activities.ResetPasswordActivity" />
         <activity
-            android:name=".ui.activities.FriendsActivity"
-            android:theme="@style/GiftyTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.GroupsActivity"
-            android:theme="@style/GiftyTheme.NoActionBar" />
-        <activity android:name=".ui.activities.GiftListActivity" />
-        <activity android:name=".ui.activities.BottomNavigationActivity" />
+            android:name=".ui.activities.BottomNavigationActivity"
+            android:theme="@style/GiftyTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    android:background="@color/white"
     tools:context=".ui.activities.SignInActivity">
 
     <LinearLayout
@@ -69,7 +68,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/green"
-            android:textStyle="bold"
             android:text="@string/sign_in"
             android:textColor="@color/white" />
 
@@ -87,6 +85,7 @@
             style="@style/FirebaseUI.Button.AccountChooser.PhoneButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="normal"
             android:text="@string/sign_in_with_phone"
             android:textAlignment="center"
             android:textAllCaps="true"

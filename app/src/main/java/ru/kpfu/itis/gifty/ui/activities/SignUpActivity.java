@@ -1,7 +1,6 @@
 package ru.kpfu.itis.gifty.ui.activities;
 
 import static ru.kpfu.itis.gifty.utils.Consts.EMAIL_REGEX;
-import static ru.kpfu.itis.gifty.utils.Keyboard.hide;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.widget.ProgressBar;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 import ru.kpfu.itis.gifty.R;
-import ru.kpfu.itis.gifty.model.entities.GiftList;
 import ru.kpfu.itis.gifty.model.entities.User;
 import ru.kpfu.itis.gifty.model.providers.UserProvider;
 
@@ -53,7 +51,6 @@ public class SignUpActivity extends AppCompatActivity {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             String name = nameEditText.getText().toString();
-            hide(container);
             if (TextUtils.isEmpty(email)) {
                 emailTextInput.setError(getString(R.string.error_empty_email));
                 return;
@@ -83,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String uid = task.getResult().getUser().getUid();
                             UserProvider.getInstance().createUser(new User(uid, name));
-                            Intent intent = new Intent(this, GiftListActivity.class);
+                            Intent intent = new Intent(this, BottomNavigationActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 

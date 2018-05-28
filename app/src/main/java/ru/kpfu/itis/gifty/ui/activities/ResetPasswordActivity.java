@@ -3,7 +3,6 @@ package ru.kpfu.itis.gifty.ui.activities;
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
 import static ru.kpfu.itis.gifty.utils.Consts.EMAIL;
 import static ru.kpfu.itis.gifty.utils.Consts.EMAIL_REGEX;
-import static ru.kpfu.itis.gifty.utils.Keyboard.hide;
 
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar.BaseCallback;
@@ -48,7 +47,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private void initClickListeners() {
         resetPasswordButton.setOnClickListener((View v) -> {
             String email = emailEditText.getText().toString();
-            hide(container);
 
             if (TextUtils.isEmpty(email)) {
                 emailTextInput.setError(getString(R.string.error_empty_email));

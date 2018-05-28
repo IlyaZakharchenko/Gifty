@@ -4,7 +4,6 @@ import static ru.kpfu.itis.gifty.utils.Consts.EMAIL;
 import static ru.kpfu.itis.gifty.utils.Consts.EMAIL_REGEX;
 import static ru.kpfu.itis.gifty.utils.Consts.RC_NAME;
 import static ru.kpfu.itis.gifty.utils.Consts.RC_PHONE;
-import static ru.kpfu.itis.gifty.utils.Keyboard.hide;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,11 +28,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import ru.kpfu.itis.gifty.R;
+import ru.kpfu.itis.gifty.model.entities.User;
 import ru.kpfu.itis.gifty.model.providers.UserProvider;
 
 public class SignInActivity extends AppCompatActivity {
-
-    private static final String TAG = "SignInActivity";
 
     private FirebaseAuth auth;
 
@@ -72,6 +69,7 @@ public class SignInActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case RC_PHONE:
+                    UserProvider.getInstance().createUser(new User(auth.getCurrentUser().getUid()));
                     startActivityForResult(new Intent(this, SetNameActivity.class), RC_NAME);
                     break;
                 case RC_NAME:
@@ -113,7 +111,6 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            hide(getCurrentFocus());
 
             if (TextUtils.isEmpty(email)) {
                 emailTextInput.setError(getString(R.string.error_empty_email));
@@ -156,10 +153,11 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-            }            @Override
-            public void afterTextChanged(final Editable s) {
             }
 
+            @Override
+            public void afterTextChanged(final Editable s) {
+            }
 
 
             @Override
@@ -199,7 +197,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void startGiftListActivity() {
-        Intent intent = new Intent(this, GiftListActivity.class);
+        Intent intent = new Intent(this, BottomNavigationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

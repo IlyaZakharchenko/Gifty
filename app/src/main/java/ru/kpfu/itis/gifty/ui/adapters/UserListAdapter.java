@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 import ru.kpfu.itis.gifty.R;
 import ru.kpfu.itis.gifty.model.entities.Friend;
@@ -20,12 +19,6 @@ import ru.kpfu.itis.gifty.ui.adapters.UserListAdapter.UserListViewHolder;
  */
 public class UserListAdapter extends RecyclerView.Adapter<UserListViewHolder> {
 
-    private List<User> userList;
-
-    public UserListAdapter(final List<User> userList) {
-        this.userList = userList;
-    }
-
     static class UserListViewHolder extends RecyclerView.ViewHolder {
 
         private ImageButton actionButton;
@@ -37,26 +30,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListViewHolder> {
             actionButton = itemView.findViewById(R.id.btn_action);
         }
     }
+    private List<User> userList;
 
-    @Override
-    public int getItemCount() {
-        return userList.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull final UserListViewHolder holder, final int position) {
-        User user = userList.get(position);
-        holder.displayNameTextView.setText(user.getDisplayName());
-        User currentUser = UserProvider.getInstance().getUser();
-        holder.actionButton.setImageResource(R.drawable.ic_add);
-        holder.actionButton.setOnClickListener(v -> {
-            userList.remove(user);
-            notifyDataSetChanged();
-            UserProvider.getInstance()
-                    .addFriend(new Friend(user.getDisplayName(), user.getUid()));
-            FirebaseFirestore.getInstance().collection("users/" + user.getUid() + "/friends")
-                    .add(new Friend(currentUser.getDisplayName(), currentUser.getUid()));
-        });
+    public UserListAdapter(final List<User> userList) {
+        this.userList = userList;
     }
 
     @NonNull
@@ -64,5 +41,24 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListViewHolder> {
     public UserListViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
         return new UserListViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final UserListViewHolder holder, final int position) {
+        User user = userList.get(position);
+        holder.displayNameTextView.setText(user.getDisplayName());
+        holder.actionButton.setImageResource(R.drawable.ic_add_clr_primary);
+        holder.actionButton.setOnClickListener(v -> {
+            userList.remove(user);
+            notifyDataSetChanged();
+            UserProvider.getInstance()
+                    .addFriend(new Friend(user.getDisplayName(), user.getUid()));
+
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return userList.size();
     }
 }
